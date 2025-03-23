@@ -15,26 +15,24 @@ public class JDBC_Connnection {
         //process the result
         //close the connection
 
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc_demo", "root","root");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc_demo", "root", "root");
+
+        String query = "select sname from student where sid=1;";
 
         System.out.println("Connection established");
-
-
-        String query = "select * from student";
 
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(query);
 
-        //-----------------Multiple  Value------------------//
-        while (rs.next()){
-            System.out.print(rs.getInt("sid") + "-");
-            System.out.print(rs.getString("sname")+ "-");
-            System.out.println(rs.getInt("marks"));
+        if (rs.next()) {  // Move the cursor to the first row
+            String name = rs.getString("sname");
+            System.out.println("Student name is: " + name);
+        } else {
+            System.out.println("No student found with sid=1");
         }
-        //-----------------Multiple  Value------------------//
-        con.close();
 
-        System.out.println("Connection Closed ");
+        con.close();
+        System.out.println("Connection Closed");
 
     }
 
